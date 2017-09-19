@@ -1,3 +1,5 @@
+import random
+
 class Item():
     """The base class for all items"""
 
@@ -29,6 +31,24 @@ class Flask(Alcohol):
                          description="You've found a flask in your pocket, theres a bit of brandy left",
                          strength=30,
                          volume=5)
+
+class Pill(Alcohol):
+    def __init__(self):
+        shapes = [
+            "dog",
+            "foot",
+            "drawing of dignity"
+        ]
+        adjective = [
+            "heavy",
+            "alluring",
+            "girthy"
+        ]
+        description = ("A pill shaped like a " + random.choice(shapes) + ". It's surprisingly " + random.choice(adjective))
+        super().__init__(name="Pill",
+                         description=description,
+                         strength=random.randint(1,45),
+                         volume=1)
 
 
 class Dagger(Alcohol):
