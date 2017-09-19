@@ -128,6 +128,16 @@ class Find5GoldRoom(LootRoom):
         Someone dropped a 5 gold piece. You pick it up.
         """
 
+class FindRandomPillRoom(LootRoom):
+    def __init__(self, x, y):
+        super().__init__(x, y, items.Pill())
+
+    def intro_text(self):
+        return """
+        You notice something small and white stuck to some chewy on the wall.
+        It's a pill of some kind... you pick it up.
+        A sense of optimism fills you.
+        """
 
 class GiantSpiderRoom(EnemyRoom):
     def __init__(self, x, y):
