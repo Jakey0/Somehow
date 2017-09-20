@@ -53,7 +53,6 @@ class ViewInventory(Action):
 class Attack(Action):
     def __init__(self, enemy):
         super().__init__(method=Player.attack, name="Drink", hotkey='a', enemy=enemy)
-        #items.Flask.strength = items.Flask.strength - 3
 
 
 class Flee(Action):
