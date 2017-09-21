@@ -46,12 +46,7 @@ class Player():
         max_dmg = 0
         for i in self.inventory:
             if isinstance(i, items.Alcohol):
-                if i.volume <= 0:
-                    self.remove_inv(i)
-                    #self.inventory.remove(name=)
-                    print("\nYou've drank all of your {}\n".format(i.name))
-                    break
-                else:
+
                     max_dmg = i.volume
                     best_weapon = i
 
@@ -59,10 +54,23 @@ class Player():
         print("You use {} against {}!\n".format(best_weapon.name, enemy.name))
         enemy.hp -= best_weapon.volume
         i.volume -= 3
+        if i.volume <= 0:
+            count = 0
+            for item in self.inventory:
+                if item == i:
+                    self.remove_inv(count)
+                count += 1
+
+
+
+            # self.inventory.remove(name=)
+            print("\nYou've drank all of your {}\n".format(i.name))
         if not enemy.is_alive():
             print("You defeated {} for now!".format(enemy.name))
         else:
             print("{} HP is {}.".format(enemy.name, enemy.hp))
+
+
 
     def flee(self, tile):
         """Moves the player randomly to an adjacent tile"""
