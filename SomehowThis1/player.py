@@ -38,13 +38,17 @@ class Player():
     def move_west(self):
         self.move(dx=-1, dy=0)
 
+    def remove_inv(self, i):
+        del self.inventory[i]
+
     def attack(self, enemy):
         best_weapon = None
         max_dmg = 0
         for i in self.inventory:
             if isinstance(i, items.Alcohol):
-                if i.volume <= max_dmg:
-                    self.inventory.remove(i)
+                if i.volume <= 0:
+                    self.remove_inv(i)
+                    #self.inventory.remove(name=)
                     print("\nYou've drank all of your {}\n".format(i.name))
                     break
                 else:

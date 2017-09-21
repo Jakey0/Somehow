@@ -57,7 +57,10 @@ class EnemyRoom(MapTile):
         if self.enemy.is_alive():
             return [actions.Attack(enemy=self.enemy), actions.ViewInventory()]
         else:
-            return self.adjacent_moves()
+            result = self.adjacent_moves()
+            result.append(actions.ViewInventory())
+            return result
+                #[self.adjacent_moves()], self.available_actions()
 
 class StartingRoom(EnemyRoom):
     def __init__(self, x, y):
