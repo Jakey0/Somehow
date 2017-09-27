@@ -51,8 +51,8 @@ class ViewInventory(Action):
 
 
 class Attack(Action):
-    def __init__(self, enemy):
-        super().__init__(method=Player.attack, name="Drink", hotkey='a', enemy=enemy)
+    def __init__(self, ailment):
+        super().__init__(method=Player.attack, name="Drink", hotkey='a', ailment=ailment)
 
 
 class Flee(Action):

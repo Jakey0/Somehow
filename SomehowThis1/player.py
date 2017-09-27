@@ -1,6 +1,5 @@
 import world, items, random
 
-
 class Player():
     def __init__(self):
         self.inventory = [items.CreditCard(15), items.Flask()]
@@ -41,7 +40,7 @@ class Player():
     def remove_inv(self, i):
         del self.inventory[i]
 
-    def attack(self, enemy):
+    def attack(self, ailment):
         best_weapon = None
         max_dmg = 0
         for i in self.inventory:
@@ -51,8 +50,8 @@ class Player():
                     best_weapon = i
 
 
-        print("You use {} against {}!\n".format(best_weapon.name, enemy.name))
-        enemy.hp -= best_weapon.volume
+        print("You use {} against {}!\n".format(best_weapon.name, ailment.name))
+        ailment.hp -= best_weapon.volume
         i.volume -= 3
         if i.volume <= 0:
             count = 0
@@ -65,10 +64,10 @@ class Player():
 
             # self.inventory.remove(name=)
             print("\nYou've drank all of your {}\n".format(i.name))
-        if not enemy.is_alive():
-            print("You defeated {} for now!".format(enemy.name))
+        if not ailment.is_suffering():
+            print("You defeated {} for now!".format(ailment.name))
         else:
-            print("{} HP is {}.".format(enemy.name, enemy.hp))
+            print("{} HP is {}.".format(ailment.name, ailment.hp))
 
 
 

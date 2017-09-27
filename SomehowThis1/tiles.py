@@ -1,7 +1,7 @@
 """Describes the tiles in the world space."""
 __author__ = 'JDO'
 
-import items, enemies, actions, world
+import items, enemies, actions, world, ailments
 from player import Player
 
 
@@ -22,7 +22,10 @@ class MapTile:
 
     def modify_player(self, the_player):
         """Process actions that change the state of the player."""
+
         raise NotImplementedError()
+
+
 
     def adjacent_moves(self):
         """Returns all move actions for adjacent tiles."""
@@ -41,40 +44,48 @@ class MapTile:
         """Returns all of the available actions in this room."""
         moves = self.adjacent_moves()
         moves.append(actions.ViewInventory())
-
         return moves
 class EnemyRoom(MapTile):
-    def __init__(self, x, y, enemy):
-        self.enemy = enemy
+    def __init__(self, x, y, ailment):
+        self.ailment = ailment
         super().__init__(x, y)
 
     def modify_player(self, the_player):
-        if self.enemy.is_alive():
-            the_player.hp = the_player.hp - self.enemy.damage
-            print("Hangover does {} damage. You have {} HP remaining.".format(self.enemy.damage, the_player.hp))
+        if self.ailment.is_suffering():
+            the_player.hp = the_player.hp - self.ailment.damage
+            print("Hangover does {} damage. You have {} HP remaining.".format(self.ailment.damage, the_player.hp))
 
     def available_actions(self):
-        if self.enemy.is_alive():
-            return [actions.Attack(enemy=self.enemy), actions.ViewInventory()]
+        if self.ailment.is_suffering():
+            result = self.adjacent_moves()
+            result.append(actions.ViewInventory())
+            result.append(actions.Attack(ailment=self.ailment))
+            return result
         else:
             result = self.adjacent_moves()
             result.append(actions.ViewInventory())
             return result
+        #else:
+
+            #return result
                 #[self.adjacent_moves()], self.available_actions()
 
 class StartingRoom(EnemyRoom):
     def __init__(self, x, y):
-        super().__init__(x, y, enemies.Hangover())
+        super().__init__(x, y, ailments.Hangover())
 
     def intro_text(self):
-        if self.enemy.is_alive():
-            return """
-            You wake up in a strange room, your head hurts and your hangover is intensifying
-            """
-        else:
-            return """
-            You've drank enough alcohol to get over it... for now
-            """
+        if self.ailment.is_lingering():
+
+            if self.ailment.is_suffering():
+                return """
+                You wake up in a strange room, your head hurts and your hangover is intensifying
+                """
+            else:
+                return """
+                You've drank enough alcohol to get over it... for now
+                """
+
 
 
 
